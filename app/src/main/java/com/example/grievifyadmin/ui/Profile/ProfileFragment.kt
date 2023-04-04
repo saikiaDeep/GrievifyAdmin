@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.grievifyadmin.StartActivity
 import com.example.grievifyadmin.databinding.FragmentProfileBinding
 
 class ProfileFragment : Fragment() {
@@ -23,7 +24,10 @@ class ProfileFragment : Fragment() {
     ): View {
 
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
-
+        binding.buttonEditProfile.setOnClickListener {
+//            val i= Intent(context,StartActivity::class.java)
+//            startActivity(i)
+        }
         return binding.root
     }
 

@@ -6,23 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".ui.Profile.ProfileFragment">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|end"
-            android:layout_margin="20dp"
-            android:clickable="true"
-            android:src="@android:drawable/btn_dialog" />
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
     <LinearLayout
+        android:id="@+id/defaultLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -176,9 +163,19 @@
 
         </LinearLayout>
         <Button
-            android:id="@+id/button2"
+            android:layout_marginTop="50dp"
+            android:id="@+id/buttonEditProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:text="Edit Profile" />
+        <Button
+            android:id="@+id/buttonLogOut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
             android:text="Log Out" />
 
 
