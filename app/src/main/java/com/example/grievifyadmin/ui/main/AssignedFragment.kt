@@ -5,7 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.grievifyadmin.R
+import com.example.grievifyadmin.adapters.AssignedAdapter
+import com.example.grievifyadmin.dataClass.TicketData
+import com.example.grievifyadmin.databinding.FragmentAssignedBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,7 +23,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class AssignedFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+
     private var param1: String? = null
     private var param2: String? = null
 
@@ -29,13 +34,22 @@ class AssignedFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
     }
+    private lateinit var binding: FragmentAssignedBinding
+    private val ticketModelArrayList=ArrayList<TicketData>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_assigned, container, false)
+        ticketModelArrayList.add(TicketData("deep1","2112129","sw","high","sad","inProgress","1234","5678"))
+        ticketModelArrayList.add(TicketData("deep2","2112129","sw","high","sad","inProgress","1234","5678"))
+        ticketModelArrayList.add(TicketData("deep3","2112129","sw","high","sad","inProgress","1234","5678"))
+        ticketModelArrayList.add(TicketData("deep4","2112129","sw","high","sad","inProgress","1234","5678"))
+        binding = FragmentAssignedBinding.inflate(layoutInflater)
+        binding.idRVAssigned.adapter= context?.let {it1-> AssignedAdapter(it1,ticketModelArrayList) }
+        binding.idRVAssigned.layoutManager= LinearLayoutManager(context)
+        return binding.root
     }
 
     companion object {
@@ -47,7 +61,6 @@ class AssignedFragment : Fragment() {
          * @param param2 Parameter 2.
          * @return A new instance of fragment AssignedFragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             AssignedFragment().apply {

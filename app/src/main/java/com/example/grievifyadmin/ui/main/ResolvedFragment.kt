@@ -5,7 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.grievifyadmin.R
+import com.example.grievifyadmin.adapters.AssignedAdapter
+import com.example.grievifyadmin.dataClass.TicketData
+import com.example.grievifyadmin.databinding.FragmentAssignedBinding
+import com.example.grievifyadmin.databinding.FragmentResolvedBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,13 +34,21 @@ class ResolvedFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
     }
-
+    private lateinit var binding: FragmentResolvedBinding
+    private val ticketModelArrayList=ArrayList<TicketData>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_resolved, container, false)
+        ticketModelArrayList.add(TicketData("deep1","2112129","sw","high","sad","inProgress","1234","5678"))
+        ticketModelArrayList.add(TicketData("deep2","2112129","sw","high","sad","inProgress","1234","5678"))
+        ticketModelArrayList.add(TicketData("deep3","2112129","sw","high","sad","inProgress","1234","5678"))
+        ticketModelArrayList.add(TicketData("deep4","2112129","sw","high","sad","inProgress","1234","5678"))
+        binding = FragmentResolvedBinding.inflate(layoutInflater)
+        binding.idRVResolved.adapter= context?.let {it1-> AssignedAdapter(it1,ticketModelArrayList) }
+        binding.idRVResolved.layoutManager= LinearLayoutManager(context)
+        return binding.root
     }
 
     companion object {
