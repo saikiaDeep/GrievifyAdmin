@@ -1,5 +1,6 @@
 package com.example.grievifyadmin.ui.Analytics
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,7 +22,8 @@ class AnalyticsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAnalyticsBinding.inflate(inflater, container, false)
-
+        val i = Intent(context, AnalyticsActivity::class.java)
+        startActivity(i)
 
         return binding.root
     }
