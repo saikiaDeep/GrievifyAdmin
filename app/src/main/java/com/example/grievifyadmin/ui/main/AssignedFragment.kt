@@ -35,19 +35,19 @@ class AssignedFragment : Fragment() {
         }
     }
     private lateinit var binding: FragmentAssignedBinding
-    private val ticketModelArrayList=ArrayList<TicketData>()
+    private val ticketAssignedArrayList=ArrayList<TicketData>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        ticketModelArrayList.add(TicketData("deep1","2112129","sw","high","sad","inProgress","1234","5678"))
-        ticketModelArrayList.add(TicketData("deep2","2112129","sw","high","sad","inProgress","1234","5678"))
-        ticketModelArrayList.add(TicketData("deep3","2112129","sw","high","sad","inProgress","1234","5678"))
-        ticketModelArrayList.add(TicketData("deep4","2112129","sw","high","sad","inProgress","1234","5678"))
+        ticketAssignedArrayList.add(TicketData("deep1","2112129","sw","high","sad","inProgress","1234","5678"))
+        ticketAssignedArrayList.add(TicketData("deep2","2112129","sw","high","sad","inProgress","1234","5678"))
+        ticketAssignedArrayList.add(TicketData("deep3","2112129","sw","high","sad","inProgress","1234","5678"))
+        ticketAssignedArrayList.add(TicketData("deep4","2112129","sw","high","sad","inProgress","1234","5678"))
         binding = FragmentAssignedBinding.inflate(layoutInflater)
-        binding.idRVAssigned.adapter= context?.let {it1-> AssignedAdapter(it1,ticketModelArrayList) }
+        binding.idRVAssigned.adapter= context?.let {it1-> AssignedAdapter(it1,ticketAssignedArrayList) }
         binding.idRVAssigned.layoutManager= LinearLayoutManager(context)
         return binding.root
     }
