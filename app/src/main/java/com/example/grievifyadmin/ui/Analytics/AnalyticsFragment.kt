@@ -11,7 +11,6 @@ import com.example.grievifyadmin.databinding.FragmentAnalyticsBinding
 class AnalyticsFragment : Fragment() {
 
     private var _binding: FragmentAnalyticsBinding? = null
-
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -24,7 +23,6 @@ class AnalyticsFragment : Fragment() {
         _binding = FragmentAnalyticsBinding.inflate(inflater, container, false)
 //        val i = Intent(context, AnalyticsActivity::class.java)
 //        startActivity(i)
-
         return binding.root
     }
 

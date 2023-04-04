@@ -25,14 +25,7 @@ class HomeFragment : Fragment() {
     ): View {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-          val sectionsPagerAdapter = context?.let {
-              fragmentManager?.let { it1 ->
-                  SectionsPagerAdapter(
-                      it,
-                      it1
-                  )
-              }
-          }
+        val sectionsPagerAdapter = SectionsPagerAdapter(requireContext(),childFragmentManager)
         val viewPager: ViewPager = binding.viewPager
         viewPager.adapter = sectionsPagerAdapter
         val tabs: TabLayout = binding.tabs

@@ -23,7 +23,7 @@ class ProfileFragment : Fragment() {
     ): View {
 
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
-        binding.textSlideshow.text="profile"
+
         return binding.root
     }
 
