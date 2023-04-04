@@ -21,12 +21,6 @@
             android:name=".AuthActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.Profile.ProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.Analytics.AnalyticsActivity"
-            android:exported="false" />
-        <activity
             android:name=".StartActivity"
             android:exported="true"
             android:label="@string/app_name"

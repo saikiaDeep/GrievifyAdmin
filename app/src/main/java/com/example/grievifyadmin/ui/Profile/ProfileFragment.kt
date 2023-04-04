@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.grievifyadmin.databinding.FragmentProfileBinding
-import com.example.grievifyadmin.ui.Analytics.AnalyticsActivity
 
 class ProfileFragment : Fragment() {
 
@@ -24,8 +23,7 @@ class ProfileFragment : Fragment() {
     ): View {
 
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
-        val i = Intent(context, ProfileActivity::class.java)
-        startActivity(i)
+        binding.textSlideshow.text="profile"
         return binding.root
     }
 

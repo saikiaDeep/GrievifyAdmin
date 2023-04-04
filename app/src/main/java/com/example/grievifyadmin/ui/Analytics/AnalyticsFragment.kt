@@ -22,8 +22,8 @@ class AnalyticsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAnalyticsBinding.inflate(inflater, container, false)
-        val i = Intent(context, AnalyticsActivity::class.java)
-        startActivity(i)
+//        val i = Intent(context, AnalyticsActivity::class.java)
+//        startActivity(i)
 
         return binding.root
     }

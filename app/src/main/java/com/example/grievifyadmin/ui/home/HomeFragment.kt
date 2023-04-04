@@ -5,7 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.viewpager.widget.ViewPager
 import com.example.grievifyadmin.databinding.FragmentHomeBinding
+import com.example.grievifyadmin.ui.main.SectionsPagerAdapter
+import com.google.android.material.tabs.TabLayout
 
 class HomeFragment : Fragment() {
 
@@ -22,7 +25,18 @@ class HomeFragment : Fragment() {
     ): View {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-
+          val sectionsPagerAdapter = context?.let {
+              fragmentManager?.let { it1 ->
+                  SectionsPagerAdapter(
+                      it,
+                      it1
+                  )
+              }
+          }
+        val viewPager: ViewPager = binding.viewPager
+        viewPager.adapter = sectionsPagerAdapter
+        val tabs: TabLayout = binding.tabs
+        tabs.setupWithViewPager(viewPager)
         return binding.root
     }
 

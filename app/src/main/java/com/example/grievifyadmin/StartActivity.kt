@@ -42,11 +42,11 @@ class StartActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         //View pager for tabbed activity
-        val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
-        val viewPager: ViewPager = binding.drawerLayout.findViewById(R.id.view_pager)
-        viewPager.adapter = sectionsPagerAdapter
-        val tabs: TabLayout = binding.drawerLayout.findViewById(R.id.tabs)
-        tabs.setupWithViewPager(viewPager)
+//        val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
+//        val viewPager: ViewPager = binding.drawerLayout.findViewById(R.id.view_pager)
+//        viewPager.adapter = sectionsPagerAdapter
+//        val tabs: TabLayout = binding.drawerLayout.findViewById(R.id.tabs)
+//        tabs.setupWithViewPager(viewPager)
 
 
     }
