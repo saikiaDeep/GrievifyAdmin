@@ -5,7 +5,11 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.example.grievifyadmin.DescriptionActivity
+import com.example.grievifyadmin.StartActivity
 import com.example.grievifyadmin.dataClass.TicketData
 import com.example.grievifyadmin.databinding.TicketLayoutBinding
 
@@ -26,7 +30,10 @@ class AssignedAdapter(private val context: Context?,
         holder.adapterBinding.textView2.text=ArrayList[position].ticketID
         holder.adapterBinding.textView3.text=ArrayList[position].priority
         holder.itemView.setOnClickListener {
-           Toast.makeText(context,"Clicked",Toast.LENGTH_SHORT).show()
+            val value = ArrayList[position].ticketID
+            val i = Intent(context, DescriptionActivity::class.java)
+            i.putExtra("key", value)
+            context?.startActivity(i)
         }
     }
 
