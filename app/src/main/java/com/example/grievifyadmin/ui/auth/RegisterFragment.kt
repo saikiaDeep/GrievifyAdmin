@@ -1,60 +1,164 @@
 package com.example.grievifyadmin.ui.auth
 
+import android.app.ActionBar
+import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.example.grievifyadmin.AuthActivity
 import com.example.grievifyadmin.R
+import com.example.grievifyadmin.dataClass.UserModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [RegisterFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class RegisterFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+    private lateinit var email: EditText
+    private lateinit var pass: EditText
+    private lateinit var confrmpass: EditText
+    private lateinit var signupbtn: Button
+    private lateinit var auth: FirebaseAuth
+    private lateinit var emailtxt: String
+    private lateinit var passtxt: String
+    private lateinit var cnfrmpasstxt: String
+    private lateinit var user: FirebaseUser
+    private lateinit var database: DatabaseReference
+    private lateinit var token: String
+    var ct: Int = 0
+    lateinit var register: TextView
+    lateinit var actionbar: ActionBar
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register, container, false)
+        val view = inflater.inflate(R.layout.fragment_register, container, false)
+        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+        auth = FirebaseAuth.getInstance()
+        database =
+            FirebaseDatabase.getInstance("https://sellr-7a02b-default-rtdb.asia-southeast1.firebasedatabase.app").reference
+        email = view.findViewById(R.id.editTextEmail)
+        pass = view.findViewById(R.id.editTextTextPassword)
+        confrmpass = view.findViewById(R.id.editTextTextPassword2)
+        signupbtn = view.findViewById(R.id.button)
+
+
+
+
+        signupbtn.setOnClickListener {
+
+            ct = 0;
+            emailtxt = email.text.toString().trim()
+            passtxt = pass.text.toString().trim()
+            cnfrmpasstxt = confrmpass.text.toString().trim()
+
+            if (emailtxt.isBlank()) {
+                Toast.makeText(requireContext(), "Please, Enter Valid email", Toast.LENGTH_SHORT)
+                    .show()
+                email.setError("Please, Enter Valid email")
+            } else
+                ct++;
+            if (passtxt.isBlank()) {
+                Toast.makeText(requireContext(), "Password can't be empty", Toast.LENGTH_SHORT)
+                    .show()
+                pass.setError("Password can't be empty")
+            } else
+                ct++
+            if (cnfrmpasstxt.equals(passtxt) != true) {
+                Toast.makeText(requireContext(), "Password Mismatch", Toast.LENGTH_SHORT)
+                    .show()
+                confrmpass.setError("Password Mismatch")
+            } else
+                ct++
+            if (passtxt.length < 6) {
+                Toast.makeText(
+                    requireContext(),
+                    "Password must be greater than 6 char",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+                pass.setError("Password must be greater than 6 char")
+            } else
+                ct++
+            if (emailtxt.contains("nits") != true) {
+                Toast.makeText(
+                    requireContext(),
+                    "Please enter institute email id",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+                email.setError("Please enter institute email id")
+            } else
+                ct++
+            if (ct == 5) {
+                val pd = ProgressDialog(context)
+                pd.setMessage("Sit back and relax, we are processing")
+                pd.show()
+
+
+                auth.createUserWithEmailAndPassword(emailtxt, passtxt)
+                    .addOnCompleteListener() { task ->
+                        if (task.isSuccessful) {
+
+
+                            Toast.makeText(
+                                requireContext(),
+                                "User Registered, Please check your mail for verification Link",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            user = auth.currentUser!!
+                            val uid = user.uid.toString()
+                            pd.hide()
+                            saveuserinfo(emailtxt, passtxt, uid)
+                            updateUI(user)
+
+                        } else {
+
+                            Toast.makeText(
+                                requireContext(),
+
+                                "Sign Up Unsuccessful",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            pd.hide()
+                            updateUI(null)
+                        }
+                    }
+            }
+
+
+        }
+
+
+
+
+
+        return view
+
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RegisterFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RegisterFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun saveuserinfo(emailtxt: String, passtxt: String, uid: String) {
+
+        val user = UserModel(emailtxt, passtxt, null, null, null, null, "no")
+        database.child("Users").child(uid).setValue(user)
+
+    }
+
+    private fun updateUI(user: FirebaseUser?) {
+
+        val intent = Intent(requireContext(), AuthActivity::class.java)
+        startActivity(intent)
+        // fragmentload(fragment_extradetails())
+
+
     }
 }
