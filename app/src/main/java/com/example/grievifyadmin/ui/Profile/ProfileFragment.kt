@@ -40,6 +40,7 @@ class ProfileFragment : Fragment() {
                 Firebase.auth.signOut()
                 val intent = Intent(context, AuthActivity::class.java)
                 startActivity(intent)
+                activity?.finish()
 
             }
             builder.setNegativeButton("No") { _, _ ->

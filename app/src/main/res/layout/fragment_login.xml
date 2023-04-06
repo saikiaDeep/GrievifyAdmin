@@ -21,20 +21,18 @@
         app:layout_constraintVertical_bias="0.174" />
 
 
-
-
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
         android:text="Sign In"
         android:textColor="#505050"
         android:textSize="28dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/login_edit_text_layout"
-        app:layout_constraintEnd_toStartOf="@+id/imageView5"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/login_edit_text_layout"
@@ -98,13 +96,10 @@
         android:layout_marginStart="110dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="110dp"
-        android:backgroundTint="#fec202"
+        android:backgroundTint="#17756A"
         android:clickable="true"
         android:elevation="0dp"
         android:text="Login"
-
-
-        android:textColor="#4e4637"
         android:textSize="18dp"
         app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"

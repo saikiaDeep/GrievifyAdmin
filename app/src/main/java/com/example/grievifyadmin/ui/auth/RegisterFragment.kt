@@ -125,14 +125,6 @@ class RegisterFragment : Fragment() {
 
                         } else {
 
-                            Toast.makeText(
-                                requireContext(),
-
-                                "Sign Up Unsuccessful",
-                                Toast.LENGTH_LONG
-                            ).show()
-                            pd.hide()
-                            pd.dismiss()
                             updateUI(null)
 
                         }
@@ -157,9 +149,12 @@ class RegisterFragment : Fragment() {
     }
 
     private fun updateUI(user: FirebaseUser?) {
+        if(user!=null)
+        {
+            fragmentload(DetailsFragment())
+        }
 
 
-        fragmentload(DetailsFragment())
 
 
     }
