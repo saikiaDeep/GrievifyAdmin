@@ -166,5 +166,12 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:text="Mark as resolved" />
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:text="Report To Higher Authority" />
     </LinearLayout>
 </LinearLayout>
