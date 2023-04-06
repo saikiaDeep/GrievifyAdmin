@@ -1,9 +1,13 @@
 package com.example.grievifyadmin
 
+import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
+import android.widget.EditText
 import android.widget.Toast
 import com.example.grievifyadmin.databinding.ActivityDescriptionBinding
 import com.google.firebase.database.FirebaseDatabase
@@ -26,6 +30,9 @@ class DescriptionActivity : AppCompatActivity() {
         if (extras != null) {
             itemID = extras.getString("key").toString()
             fetchDataFromDataBase(itemID)
+        }
+        binding.button2.setOnClickListener {
+            showDialog(itemID)
         }
     }
     private fun fetchDataFromDataBase(items: String) {
@@ -53,12 +60,47 @@ class DescriptionActivity : AppCompatActivity() {
 
                 val uid = dataSnapshot.child("userUID").value
                 fillUser(uid)
+                binding.button5.isEnabled=true
+                if(binding.status.text=="InProgress")
+                {
+                    binding.button4.isEnabled=true
+                }
+                else if(binding.status.text=="Assigned")
+                {
+                    binding.button3.isEnabled=true
+                }
 
 
             }
         }.addOnFailureListener {
             TODO("Not yet implemented")
         }
+
+
+    }
+    private fun showDialog(itemID:String) {
+
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.send_message)
+        dialog.setCancelable(true)
+        val lp = WindowManager.LayoutParams()
+        lp.copyFrom(dialog.window!!.attributes)
+        lp.width = WindowManager.LayoutParams.WRAP_CONTENT
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT
+        val etPost = dialog.findViewById<EditText>(R.id.et_post)
+        dialog.findViewById<View>(R.id.bt_cancel)
+            .setOnClickListener { dialog.dismiss() }
+        dialog.findViewById<View>(R.id.btn_submit).setOnClickListener { _: View? ->
+            val customCat = etPost.text.toString().trim { it <= ' ' }
+            FirebaseDatabase.getInstance().reference.child("tickets").child(itemID).child("resolvedMsg")
+                .setValue(customCat).addOnSuccessListener {
+                    Toast.makeText(applicationContext,"Message Posted",Toast.LENGTH_SHORT).show()
+                }
+            dialog.dismiss()
+        }
+        dialog.show()
+        dialog.window!!.attributes = lp
 
     }
 
