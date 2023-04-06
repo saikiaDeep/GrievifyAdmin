@@ -41,10 +41,6 @@ class InProgressFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        ticketProgressArrayList.add(TicketData("deep1","2112129","sw","high","sad","inProgress","1234","5678"))
-        ticketProgressArrayList.add(TicketData("deep2","2112129","sw","high","sad","inProgress","1234","5678"))
-        ticketProgressArrayList.add(TicketData("deep3","2112129","sw","high","sad","inProgress","1234","5678"))
-        ticketProgressArrayList.add(TicketData("deep4","2112129","sw","high","sad","inProgress","1234","5678"))
         binding = FragmentInProgressBinding.inflate(layoutInflater)
         binding.idRVProgress.adapter= context?.let {it1-> AssignedAdapter(it1,ticketProgressArrayList) }
         binding.idRVProgress.layoutManager= LinearLayoutManager(context)

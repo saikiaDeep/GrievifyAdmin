@@ -1,12 +1,16 @@
 package com.example.grievifyadmin.dataClass
 
 
-data class TicketData(val userName : String? = null,
-                    val userNo : String? = null, val category : String? = null,
-                    val priority : String? = null,
-                    val description: String?= null,
-                    val status : String? = null,
-                    val ticketID : String? = null,val complaintID : String? = null)
+data class TicketData(val category: String? = null,
+                      val description: String? = null,
+                      val docsList: ArrayList<String>?=null,
+                      val feedback: String? = null,
+                      val priority: String? = null,
+                      val resolvedMsg: String? = null,
+                      val status: String? = null,
+                      val ticketID: String? = null,
+                      val userID: String? = null,
+                      val userName: String? = null)
 {
 
 }

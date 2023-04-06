@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="50dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="18dp"
+    android:layout_margin="5dp"
+    app:cardElevation="5dp"
+    app:cardBackgroundColor="#E7E1E8"
+    android:layout_height="wrap_content">
 
 
     <LinearLayout
@@ -13,6 +18,20 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            android:text="Ticket ID" />
+        <TextView
+            android:id="@+id/textView3"
+            android:gravity="end"
+            android:layout_marginEnd="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="#3B4754"
+            android:layout_marginBottom="10dp"
+            android:text="Priority" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

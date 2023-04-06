@@ -41,10 +41,6 @@ class ResolvedFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        ticketResolvedArrayList.add(TicketData("deep1","2112129","sw","high","sad","inProgress","1234","5678"))
-        ticketResolvedArrayList.add(TicketData("deep2","2112129","sw","high","sad","inProgress","1234","5678"))
-        ticketResolvedArrayList.add(TicketData("deep3","2112129","sw","high","sad","inProgress","1234","5678"))
-        ticketResolvedArrayList.add(TicketData("deep4","2112129","sw","high","sad","inProgress","1234","5678"))
         binding = FragmentResolvedBinding.inflate(layoutInflater)
         binding.idRVResolved.adapter= context?.let {it1-> AssignedAdapter(it1,ticketResolvedArrayList) }
         binding.idRVResolved.layoutManager= LinearLayoutManager(context)

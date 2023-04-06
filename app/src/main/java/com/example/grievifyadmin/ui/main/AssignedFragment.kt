@@ -11,62 +11,68 @@ import com.example.grievifyadmin.R
 import com.example.grievifyadmin.adapters.AssignedAdapter
 import com.example.grievifyadmin.dataClass.TicketData
 import com.example.grievifyadmin.databinding.FragmentAssignedBinding
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.*
+import com.google.firebase.ktx.Firebase
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [AssignedFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AssignedFragment : Fragment() {
 
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-    private lateinit var binding: FragmentAssignedBinding
+    lateinit var binding: FragmentAssignedBinding
     private val ticketAssignedArrayList=ArrayList<TicketData>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        ticketAssignedArrayList.add(TicketData("deep1","2112129","sw","high","sad","inProgress","1234","5678"))
-        ticketAssignedArrayList.add(TicketData("deep2","2112129","sw","high","sad","inProgress","1234","5678"))
-        ticketAssignedArrayList.add(TicketData("deep3","2112129","sw","high","sad","inProgress","1234","5678"))
-        ticketAssignedArrayList.add(TicketData("deep4","2112129","sw","high","sad","inProgress","1234","5678"))
+
         binding = FragmentAssignedBinding.inflate(layoutInflater)
-        binding.idRVAssigned.adapter= context?.let {it1-> AssignedAdapter(it1,ticketAssignedArrayList) }
-        binding.idRVAssigned.layoutManager= LinearLayoutManager(context)
+        fetchData()
         return binding.root
     }
 
+    private fun fetchData() {
+        binding.idRVAssigned.adapter= context?.let {it1-> AssignedAdapter(it1,ticketAssignedArrayList) }
+        binding.idRVAssigned.layoutManager= LinearLayoutManager(context)
+        val user = Firebase.auth.currentUser
+        val database= FirebaseDatabase.getInstance()
+        val myReference: DatabaseReference =database.reference.child("tickets")
+        myReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                ticketAssignedArrayList.clear()
+                if(snapshot.exists())
+                {
+                    for (cartItemIDs in snapshot.children) {
+
+                        println(cartItemIDs.value.toString())
+                        val item=cartItemIDs.getValue(TicketData::class.java)
+                        if(item!=null)
+                        {
+//                            if(item.category=="Admin")
+//                            {
+//                                ticketAssignedArrayList.add(item)
+//                            }
+                            ticketAssignedArrayList.add(item)
+                        }
+                        binding.idRVAssigned.adapter?.notifyDataSetChanged()
+                    }
+                }
+
+            }
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        }
+        )
+    }
+
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AssignedFragment.
-         */
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             AssignedFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putString("ARG_PARAM1", param1)
+                    putString("ARG_PARAM2", param2)
                 }
             }
     }

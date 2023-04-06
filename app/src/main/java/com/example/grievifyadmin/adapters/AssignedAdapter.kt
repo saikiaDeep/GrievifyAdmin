@@ -23,7 +23,8 @@ class AssignedAdapter(private val context: Context?,
     }
 
     override fun onBindViewHolder(holder: ItemsViewHolder, position: Int) {
-        holder.adapterBinding.textView2.text=ArrayList[position].userName
+        holder.adapterBinding.textView2.text=ArrayList[position].ticketID
+        holder.adapterBinding.textView3.text=ArrayList[position].priority
         holder.itemView.setOnClickListener {
            Toast.makeText(context,"Clicked",Toast.LENGTH_SHORT).show()
         }

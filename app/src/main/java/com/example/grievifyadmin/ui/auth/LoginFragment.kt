@@ -18,6 +18,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.grievifyadmin.R
 import com.example.grievifyadmin.StartActivity
+import com.example.grievifyadmin.binding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -88,6 +89,7 @@ class LoginFragment : Fragment() {
                 pd.setMessage("Sit back and relax,we are processing");
                 pd.show()
                 pd.setCancelable(false)
+                signinbtn.isEnabled=false
                 auth.signInWithEmailAndPassword(emailtxt, passtxt)
                     .addOnCompleteListener() { task ->
                         if (task.isSuccessful) {
@@ -115,6 +117,7 @@ class LoginFragment : Fragment() {
                         else {
                             // If sign in fails, display a message to the user.
                             println("Error reason" + task.exception)
+                            signinbtn.isEnabled=true
                             Log.w(ContentValues.TAG, "signInWithEmail:failure", task.exception)
                             pd.hide()
                             Toast.makeText(
