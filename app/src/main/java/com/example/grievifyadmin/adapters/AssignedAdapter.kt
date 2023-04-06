@@ -29,6 +29,7 @@ class AssignedAdapter(private val context: Context?,
     override fun onBindViewHolder(holder: ItemsViewHolder, position: Int) {
         holder.adapterBinding.textView2.text=ArrayList[position].ticketID
         holder.adapterBinding.textView3.text=ArrayList[position].priority
+        holder.adapterBinding.textView4.text=ArrayList[position].userName
         holder.itemView.setOnClickListener {
             val value = ArrayList[position].ticketID
             val i = Intent(context, DescriptionActivity::class.java)
