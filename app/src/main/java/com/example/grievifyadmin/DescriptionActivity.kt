@@ -2,10 +2,13 @@ package com.example.grievifyadmin
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.grievifyadmin.databinding.ActivityDescriptionBinding
 
 
-private lateinit var itemID:String
+
 class DescriptionActivity : AppCompatActivity() {
+    private lateinit var itemID:String
+    private lateinit var binding: ActivityDescriptionBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_description)
