@@ -52,6 +52,22 @@ class DescriptionActivity : AppCompatActivity() {
 
 
         }
+        binding.button4.setOnClickListener {
+            FirebaseDatabase.getInstance().reference.child("tickets").child(itemID).child("status")
+                .setValue("Resolved").addOnSuccessListener {
+                    Toast.makeText(applicationContext,"Marked as resolved",Toast.LENGTH_SHORT).show()
+                    onBackPressed()
+                }
+
+        }
+        binding.button3.setOnClickListener {
+            FirebaseDatabase.getInstance().reference.child("tickets").child(itemID).child("status")
+                .setValue("InProgress").addOnSuccessListener {
+                    Toast.makeText(applicationContext,"Marked as in-progress",Toast.LENGTH_SHORT).show()
+                    onBackPressed()
+                }
+
+        }
     }
     private fun fetchDataFromDataBase(items: String) {
         val databaseItem =
