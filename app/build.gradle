@@ -51,4 +51,10 @@ dependencies {
     //pie chart
     implementation 'com.github.blackfizz:eazegraph:1.2.5l@aar'
     implementation 'com.nineoldandroids:library:2.4.0'
+
+    //dialogFlow
+    implementation 'com.google.cloud:google-cloud-dialogflow:2.1.0'
+    implementation 'io.grpc:grpc-okhttp:1.30.0'
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0")
 }
