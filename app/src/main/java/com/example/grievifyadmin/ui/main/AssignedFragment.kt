@@ -38,6 +38,7 @@ class AssignedFragment : Fragment() {
         val myReference: DatabaseReference =database.reference.child("tickets")
         myReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                binding.animationView.visibility=View.GONE
                 ticketAssignedArrayList.clear()
                 if(snapshot.exists())
                 {

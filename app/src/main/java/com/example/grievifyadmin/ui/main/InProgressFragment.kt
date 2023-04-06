@@ -61,6 +61,7 @@ class InProgressFragment : Fragment() {
         val myReference: DatabaseReference = database.reference.child("tickets")
         myReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                binding.animationView.visibility=View.GONE
                 ticketProgressArrayList.clear()
                 if (snapshot.exists()) {
                     for (cartItemIDs in snapshot.children) {
