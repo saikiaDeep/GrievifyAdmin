@@ -47,11 +47,10 @@ class AssignedFragment : Fragment() {
                         val item=cartItemIDs.getValue(TicketData::class.java)
                         if(item!=null)
                         {
-//                            if(item.category=="Admin")
-//                            {
-//                                ticketAssignedArrayList.add(item)
-//                            }
-                            ticketAssignedArrayList.add(item)
+                            if(item.status=="Assigned")
+                            {
+                                ticketAssignedArrayList.add(item)
+                            }
                         }
                         binding.idRVAssigned.adapter?.notifyDataSetChanged()
                     }

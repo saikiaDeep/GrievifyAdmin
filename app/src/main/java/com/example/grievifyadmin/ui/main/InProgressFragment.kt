@@ -8,9 +8,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.grievifyadmin.R
 import com.example.grievifyadmin.adapters.AssignedAdapter
+import com.example.grievifyadmin.adapters.InProgressAdapter
 import com.example.grievifyadmin.dataClass.TicketData
 import com.example.grievifyadmin.databinding.FragmentAssignedBinding
 import com.example.grievifyadmin.databinding.FragmentInProgressBinding
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.*
+import com.google.firebase.ktx.Firebase
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -42,9 +46,46 @@ class InProgressFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentInProgressBinding.inflate(layoutInflater)
-        binding.idRVProgress.adapter= context?.let {it1-> AssignedAdapter(it1,ticketProgressArrayList) }
-        binding.idRVProgress.layoutManager= LinearLayoutManager(context)
+            fetchData()
         return binding.root
+    }
+
+   
+
+    private fun fetchData() {
+        binding.idRVProgress.adapter =
+            context?.let { it1 -> InProgressAdapter(it1, ticketProgressArrayList) }
+        binding.idRVProgress.layoutManager = LinearLayoutManager(context)
+        val user = Firebase.auth.currentUser
+        val database = FirebaseDatabase.getInstance()
+        val myReference: DatabaseReference = database.reference.child("tickets")
+        myReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                ticketProgressArrayList.clear()
+                if (snapshot.exists()) {
+                    for (cartItemIDs in snapshot.children) {
+
+                        println(cartItemIDs.value.toString())
+                        val item = cartItemIDs.getValue(TicketData::class.java)
+                        if (item != null) {
+                            if(item.status=="InProgress")
+                            {
+                                ticketProgressArrayList.add(item)
+                            }
+
+                        }
+                        binding.idRVProgress.adapter?.notifyDataSetChanged()
+                    }
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        }
+        )
     }
 
     companion object {
