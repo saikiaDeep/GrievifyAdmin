@@ -2,6 +2,7 @@ package com.example.grievifyadmin
 
 import android.app.Dialog
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -33,6 +34,23 @@ class DescriptionActivity : AppCompatActivity() {
         }
         binding.button2.setOnClickListener {
             showDialog(itemID)
+        }
+        binding.button5.setOnClickListener {
+            val recipientEmail = "example@example.com"
+            val emailSubject = "Need Immediate action"
+            val emailMessage = "Email message body goes here."
+
+            val intent = Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_EMAIL, arrayOf(recipientEmail))
+                putExtra(Intent.EXTRA_SUBJECT, emailSubject)
+                putExtra(Intent.EXTRA_TEXT, emailMessage)
+            }
+
+            startActivity(Intent.createChooser(intent, "Send email using:"))
+
+
+
         }
     }
     private fun fetchDataFromDataBase(items: String) {
