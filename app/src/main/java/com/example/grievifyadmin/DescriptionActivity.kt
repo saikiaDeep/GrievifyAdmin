@@ -1,6 +1,7 @@
 package com.example.grievifyadmin
 
 import android.app.Dialog
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,18 @@ import android.widget.Toast
 import com.example.grievifyadmin.databinding.ActivityDescriptionBinding
 import com.google.firebase.database.FirebaseDatabase
 import java.util.*
+import android.content.Context
+import android.util.Log
+import com.example.grievifyadmin.dataClass.NotificationData
+import com.example.grievifyadmin.dataClass.PushNotification
+import com.example.grievifyadmin.notificationUtils.FirebaseService
+import com.example.grievifyadmin.notificationUtils.RetrofitInstance
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.FirebaseMessagingService
+import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class DescriptionActivity : AppCompatActivity() {
@@ -36,19 +49,19 @@ class DescriptionActivity : AppCompatActivity() {
             showDialog(itemID)
         }
         binding.button5.setOnClickListener {
-            val recipientEmail = "example@example.com"
-            val emailSubject = "Need Immediate action"
-            val emailMessage = "Email message body goes here."
-
-            val intent = Intent(Intent.ACTION_SEND).apply {
-                type = "text/plain"
-                putExtra(Intent.EXTRA_EMAIL, arrayOf(recipientEmail))
-                putExtra(Intent.EXTRA_SUBJECT, emailSubject)
-                putExtra(Intent.EXTRA_TEXT, emailMessage)
-            }
-
-            startActivity(Intent.createChooser(intent, "Send email using:"))
-
+//            val recipientEmail = "example@example.com"
+//            val emailSubject = "Need Immediate action"
+//            val emailMessage = "Email message body goes here."
+//
+//            val intent = Intent(Intent.ACTION_SEND).apply {
+//                type = "text/plain"
+//                putExtra(Intent.EXTRA_EMAIL, arrayOf(recipientEmail))
+//                putExtra(Intent.EXTRA_SUBJECT, emailSubject)
+//                putExtra(Intent.EXTRA_TEXT, emailMessage)
+//            }
+//
+//            startActivity(Intent.createChooser(intent, "Send email using:"))
+            sendNotif()
 
 
         }
@@ -69,6 +82,49 @@ class DescriptionActivity : AppCompatActivity() {
 
         }
     }
+    val TOPIC = "/topics/myTopic2"
+    private fun sendNotif() {
+//        FirebaseService.sharedPref = getSharedPreferences("sharedPref", Context.MODE_PRIVATE)
+//        FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
+//            FirebaseService.token = it.token
+//            etToken.setText(it.token)
+//        }
+        FirebaseMessaging.getInstance().token.addOnSuccessListener { token ->
+            FirebaseService.token = token
+            // do something with the token, like save it to shared preferences
+        }.addOnFailureListener { exception ->
+            // handle the exception if the token retrieval fails
+        }
+
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
+
+
+            val title = "title"
+            val message = "etMessage.text.toString()"
+            val recipientToken = "etToken.text.toString()"
+            if(title.isNotEmpty() && message.isNotEmpty() && recipientToken.isNotEmpty()) {
+                PushNotification(
+                    NotificationData(title, message),
+                    recipientToken
+                ).also {
+                    sendNotification(it)
+                }
+            }
+    }
+
+    private fun sendNotification(notification: PushNotification) = CoroutineScope(Dispatchers.IO).launch {
+        try {
+            val response = RetrofitInstance.api.postNotification(notification)
+            if(response.isSuccessful) {
+                Log.d(TAG, "Response: ${Gson().toJson(response)}")
+            } else {
+                Log.e(TAG, response.errorBody().toString())
+            }
+        } catch(e: Exception) {
+            Log.e(TAG, e.toString())
+        }
+    }
+
     private fun fetchDataFromDataBase(items: String) {
         val databaseItem =
             FirebaseDatabase.getInstance()
