@@ -45,7 +45,7 @@ class RegisterFragment : Fragment() {
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
         auth = FirebaseAuth.getInstance()
         database =
-            FirebaseDatabase.getInstance("https://sellr-7a02b-default-rtdb.asia-southeast1.firebasedatabase.app").reference
+            FirebaseDatabase.getInstance().reference
         email = view.findViewById(R.id.editTextEmail)
         pass = view.findViewById(R.id.editTextTextPassword)
         confrmpass = view.findViewById(R.id.editTextTextPassword2)
@@ -110,16 +110,18 @@ class RegisterFragment : Fragment() {
                         if (task.isSuccessful) {
 
 
-                            Toast.makeText(
-                                requireContext(),
-                                "User Registered, Please check your mail for verification Link",
-                                Toast.LENGTH_LONG
-                            ).show()
-                            user = auth.currentUser!!
-                            val uid = user.uid.toString()
-                            pd.hide()
-                            saveuserinfo(emailtxt, passtxt, uid)
-                            updateUI(user)
+                            auth.currentUser?.sendEmailVerification()?.addOnSuccessListener {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Verification Link Sent, Please Verify",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                                user = auth.currentUser!!
+                                val uid = user.uid.toString()
+                                saveuserinfo(emailtxt, passtxt, uid)
+                                updateUI(user)
+
+                            }
 
                         } else {
 
@@ -155,10 +157,17 @@ class RegisterFragment : Fragment() {
 
     private fun updateUI(user: FirebaseUser?) {
 
-        val intent = Intent(requireContext(), AuthActivity::class.java)
-        startActivity(intent)
-        // fragmentload(fragment_extradetails())
 
+        fragmentload(LoginFragment())
+
+
+    }
+    private fun fragmentload(fragment : Fragment)
+    {
+
+        val fragmentTransaction = parentFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.authFrameLayout, fragment)
+        fragmentTransaction.commit()
 
     }
 }
