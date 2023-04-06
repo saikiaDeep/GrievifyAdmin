@@ -61,7 +61,10 @@ class DescriptionActivity : AppCompatActivity() {
 //            }
 //
 //            startActivity(Intent.createChooser(intent, "Send email using:"))
+            Toast.makeText(applicationContext,"Marked as resolved",Toast.LENGTH_SHORT).show()
+
             sendNotif()
+
 
 
         }
@@ -84,11 +87,11 @@ class DescriptionActivity : AppCompatActivity() {
     }
     val TOPIC = "/topics/myTopic2"
     private fun sendNotif() {
-//        FirebaseService.sharedPref = getSharedPreferences("sharedPref", Context.MODE_PRIVATE)
-//        FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
-//            FirebaseService.token = it.token
-//            etToken.setText(it.token)
-//        }
+        FirebaseService.sharedPref = getSharedPreferences("sharedPref", Context.MODE_PRIVATE)
+        FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
+            FirebaseService.token = it.token
+            etToken.setText(it.token)
+        }
         FirebaseMessaging.getInstance().token.addOnSuccessListener { token ->
             FirebaseService.token = token
             // do something with the token, like save it to shared preferences
@@ -101,7 +104,7 @@ class DescriptionActivity : AppCompatActivity() {
 
             val title = "title"
             val message = "etMessage.text.toString()"
-            val recipientToken = "etToken.text.toString()"
+            val recipientToken =
             if(title.isNotEmpty() && message.isNotEmpty() && recipientToken.isNotEmpty()) {
                 PushNotification(
                     NotificationData(title, message),
