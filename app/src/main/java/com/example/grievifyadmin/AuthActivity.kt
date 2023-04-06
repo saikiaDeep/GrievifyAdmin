@@ -28,16 +28,10 @@ class AuthActivity : AppCompatActivity() {
         println("Hi there")
         val currentFragment = supportFragmentManager.fragments.last()
         super.onBackPressed()
-        if(currentFragment.toString().contains("RegisterFragment") || currentFragment.toString().contains("fragment_forgotpass") ) {
+        if(!currentFragment.toString().contains("DetailsFragment") ) {
 
-            val intent = Intent(this, AuthActivity::class.java)
-            intent.putExtra("splash off","splash off")
-            startActivity(intent)
-        }
-        else {
             finish()
         }
-
 
 
 
