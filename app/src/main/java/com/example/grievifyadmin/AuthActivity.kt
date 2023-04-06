@@ -3,9 +3,11 @@ package com.example.grievifyadmin
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import com.example.grievifyadmin.databinding.ActivityAuthBinding
 import com.example.grievifyadmin.ui.auth.LoginFragment
+import com.google.firebase.auth.FirebaseAuth
 
 lateinit var binding : ActivityAuthBinding
 class AuthActivity : AppCompatActivity() {
@@ -14,7 +16,18 @@ class AuthActivity : AppCompatActivity() {
         setContentView(R.layout.activity_auth)
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        fragmentload(LoginFragment())
+        val user=FirebaseAuth.getInstance().currentUser
+        if(user!=null)
+        {
+            val intent = Intent(this, StartActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+        else
+        {
+            fragmentload(LoginFragment())
+        }
+
     }
     private fun fragmentload(fragment : Fragment)
     {
