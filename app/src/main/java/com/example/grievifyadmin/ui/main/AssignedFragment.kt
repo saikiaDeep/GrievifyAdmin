@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.grievifyadmin.R
 import com.example.grievifyadmin.adapters.AssignedAdapter
 import com.example.grievifyadmin.dataClass.TicketData
+import com.example.grievifyadmin.dataClass.UserModel
 import com.example.grievifyadmin.databinding.FragmentAssignedBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
@@ -19,6 +20,7 @@ class AssignedFragment : Fragment() {
 
     lateinit var binding: FragmentAssignedBinding
     private val ticketAssignedArrayList=ArrayList<TicketData>()
+    private var category:String=""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,7 +28,19 @@ class AssignedFragment : Fragment() {
     ): View? {
 
         binding = FragmentAssignedBinding.inflate(layoutInflater)
-        fetchData()
+        val databaseItem =
+            FirebaseDatabase.getInstance()
+                .getReference("Admin")
+
+        databaseItem.get().addOnSuccessListener { snapshot ->
+            val user = snapshot.child(Firebase.auth.currentUser?.uid.toString()).getValue(
+                UserModel::class.java)
+            if (user != null) {
+               category=user.department.toString()
+                fetchData()
+            }
+        }
+
         return binding.root
     }
 
@@ -48,7 +62,7 @@ class AssignedFragment : Fragment() {
                         val item=cartItemIDs.getValue(TicketData::class.java)
                         if(item!=null)
                         {
-                            if(item.status=="Assigned")
+                            if(item.status=="Assigned" && item.category==category)
                             {
                                 ticketAssignedArrayList.add(item)
                             }

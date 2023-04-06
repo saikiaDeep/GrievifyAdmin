@@ -10,6 +10,7 @@ import com.example.grievifyadmin.R
 import com.example.grievifyadmin.adapters.AssignedAdapter
 import com.example.grievifyadmin.adapters.InProgressAdapter
 import com.example.grievifyadmin.dataClass.TicketData
+import com.example.grievifyadmin.dataClass.UserModel
 import com.example.grievifyadmin.databinding.FragmentAssignedBinding
 import com.example.grievifyadmin.databinding.FragmentInProgressBinding
 import com.google.firebase.auth.ktx.auth
@@ -40,13 +41,26 @@ class InProgressFragment : Fragment() {
     }
     private lateinit var binding: FragmentInProgressBinding
     private val ticketProgressArrayList=ArrayList<TicketData>()
+    private var category:String=""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentInProgressBinding.inflate(layoutInflater)
-            fetchData()
+        val databaseItem =
+            FirebaseDatabase.getInstance()
+                .getReference("Admin")
+
+        databaseItem.get().addOnSuccessListener { snapshot ->
+            val user = snapshot.child(Firebase.auth.currentUser?.uid.toString()).getValue(
+                UserModel::class.java)
+            if (user != null) {
+                category=user.department.toString()
+                fetchData()
+            }
+        }
+
         return binding.root
     }
 
@@ -69,7 +83,7 @@ class InProgressFragment : Fragment() {
                         println(cartItemIDs.value.toString())
                         val item = cartItemIDs.getValue(TicketData::class.java)
                         if (item != null) {
-                            if(item.status=="InProgress")
+                            if(item.status=="InProgress" && item.category==category)
                             {
                                 ticketProgressArrayList.add(item)
                             }
