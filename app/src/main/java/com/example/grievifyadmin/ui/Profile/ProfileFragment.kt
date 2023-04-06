@@ -5,9 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import com.example.grievifyadmin.AuthActivity
 import com.example.grievifyadmin.StartActivity
 import com.example.grievifyadmin.databinding.FragmentProfileBinding
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class ProfileFragment : Fragment() {
 
@@ -27,6 +31,21 @@ class ProfileFragment : Fragment() {
         binding.buttonEditProfile.setOnClickListener {
 //            val i= Intent(context,StartActivity::class.java)
 //            startActivity(i)
+        }
+        binding.buttonLogOut.setOnClickListener{
+            val builder = AlertDialog.Builder(requireActivity())
+            builder.setTitle("Are you sure?")
+            builder.setMessage("You will be logged out of your account")
+            builder.setPositiveButton("Yes") { _, _ ->
+                Firebase.auth.signOut()
+                val intent = Intent(context, AuthActivity::class.java)
+                startActivity(intent)
+
+            }
+            builder.setNegativeButton("No") { _, _ ->
+            }
+            builder.show()
+
         }
         return binding.root
     }

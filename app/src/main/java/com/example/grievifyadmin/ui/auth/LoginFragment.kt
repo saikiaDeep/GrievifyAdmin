@@ -94,7 +94,7 @@ class LoginFragment : Fragment() {
                     .addOnCompleteListener() { task ->
                         if (task.isSuccessful) {
                             pd.hide()
-                            dtb.child("UsersAdmin").child(auth.currentUser?.uid.toString()).get().addOnSuccessListener {
+                            dtb.child("Admin").child(auth.currentUser?.uid.toString()).get().addOnSuccessListener {
 
                                     Toast.makeText(
                                         requireContext(), "Authentication Successful.",

@@ -118,7 +118,7 @@ class RegisterFragment : Fragment() {
                                 ).show()
                                 user = auth.currentUser!!
                                 val uid = user.uid.toString()
-                                saveuserinfo(emailtxt, passtxt, uid)
+                                saveuserinfo(emailtxt,uid)
                                 updateUI(user)
 
                             }
@@ -150,11 +150,10 @@ class RegisterFragment : Fragment() {
 
     }
 
-    private fun saveuserinfo(emailtxt: String, passtxt: String, uid: String) {
+    private fun saveuserinfo(emailtxt: String, uid: String) {
 
-        val user = UserModel(emailtxt, passtxt, null, null, null, null, "no")
-        database.child("Users").child(uid).setValue(user)
-
+        val user = UserModel(emailtxt,null,null,uid,null)
+        database.child("Admin").child(uid).setValue(user)
     }
 
     private fun updateUI(user: FirebaseUser?) {

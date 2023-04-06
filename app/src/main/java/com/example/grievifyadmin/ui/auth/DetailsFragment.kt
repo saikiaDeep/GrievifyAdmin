@@ -48,13 +48,13 @@ class DetailsFragment : Fragment() {
             } else if (phone.length != 10)
                 phonenum.setError("Number should be of 10 digits")
             else {
-                dtb.child("Users").child(user.uid.toString()).get().addOnSuccessListener {
+                dtb.child("Admin").child(user.uid.toString()).get().addOnSuccessListener {
 
-                    dtb.child("Users").child(user.uid.toString()).child("infoentered")
+                    dtb.child("Admin").child(user.uid.toString()).child("infoentered")
                         .setValue("yes")
-                    dtb.child("Users").child(user.uid).child("phonenum").setValue(phone)
-                    dtb.child("Users").child(user.uid).child("name").setValue(nametxt)
-                    dtb.child("Users").child(user.uid).child("department").setValue(id)
+                    dtb.child("Admin").child(user.uid).child("phonenum").setValue(phone)
+                    dtb.child("Admin").child(user.uid).child("name").setValue(nametxt)
+                    dtb.child("Admin").child(user.uid).child("department").setValue(id)
                     fragmentload(LoginFragment())
 
                 }.addOnFailureListener {
