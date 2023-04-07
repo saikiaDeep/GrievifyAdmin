@@ -13,7 +13,7 @@ import com.example.grievifyadmin.databinding.ActivityDescriptionBinding
 import com.google.firebase.database.FirebaseDatabase
 import java.util.*
 import android.content.Intent
-
+import kotlin.collections.ArrayList
 
 
 class DescriptionActivity : AppCompatActivity() {
@@ -110,6 +110,23 @@ class DescriptionActivity : AppCompatActivity() {
                 {
                     binding.button3.isEnabled=true
                 }
+                println(dataSnapshot.child("docsList").value)
+                val imageArray = ArrayList<String>()
+                val docsList =ArrayList<String>()
+                imageArray.add(dataSnapshot.child("docsList").child("0").value.toString())
+                imageArray.add(dataSnapshot.child("docsList").child("1").value.toString())
+                imageArray.add(dataSnapshot.child("docsList").child("2").value.toString())
+                imageArray.add(dataSnapshot.child("docsList").child("3").value.toString())
+                var res ="\n"
+                for (i in imageArray) {
+                    if(i!="null")
+                    {
+                        res+=i
+                        res+="\n"
+                    }
+                }
+
+                binding.links.text=res
 
 
             }
