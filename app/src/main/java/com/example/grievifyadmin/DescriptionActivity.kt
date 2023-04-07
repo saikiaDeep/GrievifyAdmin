@@ -86,6 +86,7 @@ class DescriptionActivity : AppCompatActivity() {
             println(dataSnapshot)
             if (dataSnapshot.exists()) {
                 binding.ticketID.text=dataSnapshot.child("ticketID").value.toString()
+                binding.title.text=dataSnapshot.child("title").value.toString()
                 binding.username.text = dataSnapshot.child("userName").value.toString()
                     .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
 
