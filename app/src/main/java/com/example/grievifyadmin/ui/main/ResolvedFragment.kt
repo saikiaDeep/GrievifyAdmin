@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.grievifyadmin.R
 import com.example.grievifyadmin.adapters.AssignedAdapter
 import com.example.grievifyadmin.adapters.InProgressAdapter
+import com.example.grievifyadmin.adapters.ResolvedAdapter
 import com.example.grievifyadmin.dataClass.TicketData
 import com.example.grievifyadmin.dataClass.UserModel
 import com.example.grievifyadmin.databinding.FragmentAssignedBinding
@@ -65,7 +66,7 @@ class ResolvedFragment : Fragment() {
     }
     private fun fetchData() {
         binding.idRVResolved.adapter =
-            context?.let { it1 -> InProgressAdapter(it1, ticketResolvedArrayList) }
+            context?.let { it1 -> ResolvedAdapter(it1, ticketResolvedArrayList) }
         binding.idRVResolved.layoutManager = LinearLayoutManager(context)
         val user = Firebase.auth.currentUser
         val database = FirebaseDatabase.getInstance()
