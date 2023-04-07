@@ -40,19 +40,16 @@ class StartActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-        val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
-        val viewPager: ViewPager = binding.drawerLayout.findViewById(R.id.view_pager)
-        viewPager.adapter = sectionsPagerAdapter
-        val tabs: TabLayout = binding.drawerLayout.findViewById(R.id.tabs)
-        tabs.setupWithViewPager(viewPager)
-    }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.start, menu)
-        return true
-    }
+        //View pager for tabbed activity
+//        val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
+//        val viewPager: ViewPager = binding.drawerLayout.findViewById(R.id.view_pager)
+//        viewPager.adapter = sectionsPagerAdapter
+//        val tabs: TabLayout = binding.drawerLayout.findViewById(R.id.tabs)
+//        tabs.setupWithViewPager(viewPager)
 
+
+    }
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_start)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
